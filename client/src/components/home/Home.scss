@@ -1,0 +1,31 @@
+.homeContainer{
+    padding: 50px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    .bookContainer{
+        display: flex;
+        gap: 10px;
+        .book{
+            background: white;
+            display: flex;
+            flex-direction: column;
+            img{
+                width: 200px;
+                height: 300px;
+                background: red;
+            }
+            .buttons{
+                display: flex;
+                justify-content: center;
+                gap: 5%;
+                .updateButton .deleteButton{
+                    width: 45%;
+                }
+            }
+        }
+    }
+}
