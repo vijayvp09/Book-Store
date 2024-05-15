@@ -26,11 +26,13 @@ app.get("/books", (req, res)=> {
 });
 
 app.post("/books", (req, res)=> {
-    const query = "INSERT INTO store (title, description, cover) VALUES (?)";
+    const {title, description, price, cover} = req.body;
+    const query = "INSERT INTO store (title, description, price, cover) VALUES (?,?,?,?)";
     const values = [
-        req.body.title,
-        req.body.description,
-        req.body.cover
+        title,
+        description,
+        price,
+        cover
     ];
     db.query(query, [values], (err, data) => {
         if(err) return res.json(err);
@@ -38,5 +40,30 @@ app.post("/books", (req, res)=> {
     })
 })
 
+app.delete("/books/:id", (req, res) => {
+    const id = req.params.id;
+    const query = "DELETE FROM store WHERE id=?"
+    db.query(query, [id], (err, data) => {
+        if(err) return res.json(err);
+        return res.json({message: "deleted"})
+    })
+})
+
+app.put("/books/:id", (req, res) => {
+    console.log(req.params.id)
+    const id = req.params.id;
+    const query = "UPDATE store SET `title` = ?, `description` = ?, `price` = ?, `cover` = ? WHERE id = ?";
+    const values = [
+        req.body.title,
+        req.body.description,
+        req.body.price,
+        req.body.cover
+    ]
+    db.query(query, [...values, id], (err, data) => {
+        if(err) return res.json(err);
+        return res.json("updated")
+
+    });
+});
 
 app.listen(8800,()=> console.log("app is listenting"));
